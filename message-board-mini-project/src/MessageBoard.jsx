@@ -29,6 +29,24 @@ export default function MessageBoard() {
     }
   };
 
+  const updateMessage = async (id, newText) => {
+    try {
+      await axios.put(`${API}/posts/${id}`, { message: newText });
+      fetchMessages();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const deleteMessage = async (id) => {
+    try {
+      await axios.delete(`${API}/posts/${id}`);
+      fetchMessages();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // Fetch messages on mount and set up polling
   useEffect(() => {
     fetchMessages();
@@ -86,6 +104,8 @@ export default function MessageBoard() {
         listRef={listRef}
         bottomRef={bottomRef}
         formatDate={formatDate}
+        onUpdate={updateMessage}
+        onDelete={deleteMessage}
       />
 
       {/* “Scroll to bottom” button */}

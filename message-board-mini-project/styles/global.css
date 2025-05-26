@@ -4,7 +4,6 @@
 *::after {
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 
 html,
@@ -13,6 +12,7 @@ body {
   font-family: Roboto, sans-serif;
   background: linear-gradient(135deg, #b71c1c, #e64a19, #fdd835);
   color: #fff;
+  overflow: hidden;
 }
 
 /* Container sizing (optional) */
@@ -45,12 +45,38 @@ body > * {
   flex: 1;
   overflow: auto;
   padding: 16px;
+  margin: 16px;
+  background-color: rgba(0, 0, 0, 0.281);
+  border-radius: 6px;
 }
 
 /* Paper cards */
 .message-card {
   padding: 16px;
   margin-bottom: 8px;
+  position: relative;
+  background-color: transparent !important;
+  color: white !important;
+  transition: background-color 0.2s;
+}
+.message-card:hover {
+  background-color: #50505073 !important;
+}
+
+/* Action buttons container */
+.actionButtons {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+/* Reveal on hover of the card */
+.message-card:hover .actionButtons {
+  opacity: 1;
 }
 
 .MuiFilledInput-root {

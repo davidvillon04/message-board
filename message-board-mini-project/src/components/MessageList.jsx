@@ -1,16 +1,32 @@
-import { Box, Paper, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
+import MessageItem from "./MessageItem";
 
-export default function MessageList({ messages, listRef, bottomRef, formatDate }) {
+export default function MessageList({
+  messages,
+  listRef,
+  bottomRef,
+  formatDate,
+  onUpdate,
+  onDelete,
+}) {
   return (
-    <Box ref={listRef} flex={1} overflow="auto" p={2} sx={{ position: "relative" }}>
+    <Box
+      ref={listRef}
+      flex={1}
+      overflow="auto"
+      p={2}
+      sx={{ position: "relative" }}
+      className="message-list"
+    >
       <Stack spacing={2}>
         {messages.map((msg) => (
-          <Paper key={msg.id} sx={{ p: 2 }}>
-            <Typography variant="subtitle2" gutterBottom>
-              {msg.username} • {formatDate(msg.createdAt)}
-            </Typography>
-            <Typography variant="body1">{msg.message}</Typography>
-          </Paper>
+          <MessageItem
+            key={msg.id}
+            msg={msg}
+            formatDate={formatDate}
+            onUpdate={onUpdate}
+            onDelete={onDelete}
+          />
         ))}
         <div ref={bottomRef} />
       </Stack>
