@@ -15,12 +15,6 @@ body {
   overflow: hidden;
 }
 
-/* Container sizing (optional) */
-html,
-#root {
-  height: 100%;
-}
-
 /* Dark overlay to tint the background */
 body::before {
   content: "";
@@ -50,17 +44,31 @@ body > * {
   border-radius: 6px;
 }
 
+.message-list .message-card {
+  margin-bottom: 0 !important;
+}
+.message-list > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
 /* Paper cards */
 .message-card {
   padding: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 0;
   position: relative;
   background-color: transparent !important;
+  box-shadow: none !important;
   color: white !important;
   transition: background-color 0.2s;
 }
 .message-card:hover {
   background-color: #50505073 !important;
+}
+
+/* The header line (username + date) */
+.message-card .MuiTypography-subtitle2 {
+  font-weight: bold;
 }
 
 /* Action buttons container */

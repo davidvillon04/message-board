@@ -92,8 +92,13 @@ export default function MessageBoard() {
   // Parse Firestore timestamp
   const formatDate = (ts) => {
     if (!ts) return "";
-    const secs = ts.seconds ?? ts._seconds;
-    return new Date(secs * 1000).toLocaleString();
+    const d = new Date((ts.seconds ?? ts._seconds) * 1000);
+    const datePart = d.toLocaleDateString();
+    const timePart = d.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    return `${datePart} ${timePart}`;
   };
 
   return (

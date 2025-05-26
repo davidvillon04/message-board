@@ -3,17 +3,19 @@ import { Paper, Typography, IconButton, TextField, Button, Box } from "@mui/mate
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-export default function MessageItem({ msg, formatDate, onUpdate, onDelete }) {
+export default function MessageItem({ msg, formatDate, onUpdate, onDelete, showHeader }) {
   const [isEditing, setIsEditing] = useState(false);
   const [draft, setDraft] = useState(msg.message);
 
   return (
-    <Paper className="message-card">
+    <Paper className="message-card" sx={{ ml: showHeader ? 0 : 4 }}>
       {!isEditing ? (
         <>
-          <Typography variant="subtitle2" gutterBottom>
-            {msg.username} • {formatDate(msg.createdAt)}
-          </Typography>
+          {showHeader && (
+            <Typography variant="subtitle2" gutterBottom>
+              {msg.username} • {formatDate(msg.createdAt)}
+            </Typography>
+          )}
           <Typography variant="body1">{msg.message}</Typography>
 
           {/* Edit/Delete buttons, show on hover */}

@@ -9,25 +9,26 @@ export default function MessageList({
   onUpdate,
   onDelete,
 }) {
+  let lastUser = null;
+
   return (
-    <Box
-      ref={listRef}
-      flex={1}
-      overflow="auto"
-      p={2}
-      sx={{ position: "relative" }}
-      className="message-list"
-    >
-      <Stack spacing={2}>
-        {messages.map((msg) => (
-          <MessageItem
-            key={msg.id}
-            msg={msg}
-            formatDate={formatDate}
-            onUpdate={onUpdate}
-            onDelete={onDelete}
-          />
-        ))}
+    <Box ref={listRef} className="message-list">
+      <Stack spacing={1}>
+        {messages.map((msg) => {
+          const showHeader = msg.username !== lastUser;
+          lastUser = msg.username;
+
+          return (
+            <MessageItem
+              key={msg.id}
+              msg={msg}
+              formatDate={formatDate}
+              onUpdate={onUpdate}
+              onDelete={onDelete}
+              showHeader={showHeader}
+            />
+          );
+        })}
         <div ref={bottomRef} />
       </Stack>
     </Box>
