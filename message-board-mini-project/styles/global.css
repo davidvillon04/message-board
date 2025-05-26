@@ -1,0 +1,74 @@
+/* Reset & base */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: Roboto, sans-serif;
+  background: linear-gradient(135deg, #b71c1c, #e64a19, #fdd835);
+  color: #fff;
+}
+
+/* Container sizing (optional) */
+html,
+#root {
+  height: 100%;
+}
+
+/* Dark overlay to tint the background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.329);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content appears above the overlay */
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Message list scroll area */
+.message-list {
+  flex: 1;
+  overflow: auto;
+  padding: 16px;
+}
+
+/* Paper cards */
+.message-card {
+  padding: 16px;
+  margin-bottom: 8px;
+}
+
+.MuiFilledInput-root {
+  background-color: #ffffff !important;
+  border-radius: 6px !important;
+}
+
+/* Centered flex button: override MUI contained variant */
+.MuiButton-contained {
+  border-radius: 6px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #e64a19 !important;
+  color: #fff !important;
+}
+
+/* Hover state */
+.MuiButton-contained:hover {
+  background-color: #c63b00 !important;
+}
