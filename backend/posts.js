@@ -1,26 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
+const admin = require("firebase-admin");
 const db = require("./firebase");
-const {
-  collection,
-  getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  query,
-  orderBy,
-  serverTimestamp,
-} = require("firebase/firestore");
 
 // GET /posts - Fetch all posts
 router.get("/", async (req, res) => {
   try {
-    const postsRef = collection(db, "posts");
-    const q = query(postsRef, orderBy("createdAt", "desc"));
-    const snap = await getDocs(q);
-    const posts = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    const postsRef = await db.collection("posts").orderBy("createdAt", "desc").get();
+    const posts = postsRef.docs.map((d) => ({ id: d.id, ...d.data() }));
 
     res.json(posts);
   } catch (err) {
@@ -35,11 +23,10 @@ router.post("/", async (req, res) => {
   if (!username || !message) return res.status(400).json({ error: "username & message required" });
 
   try {
-    const postsRef = collection(db, "posts");
-    const docRef = await addDoc(postsRef, {
+    const docRef = await db.collection("posts").add({
       username,
       message,
-      createdAt: serverTimestamp(),
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
     });
     res.status(201).json({ id: docRef.id });
   } catch (err) {
@@ -51,8 +38,7 @@ router.post("/", async (req, res) => {
 // PUT /posts/:id - Update a post
 router.put("/:id", async (req, res) => {
   try {
-    const postRef = doc(db, "posts", req.params.id);
-    await updateDoc(postRef, { message: req.body.message });
+    await db.collection("posts").doc(req.params.id).update({ message: req.body.message });
     res.json({ success: true });
   } catch (err) {
     console.error(err);
@@ -63,8 +49,7 @@ router.put("/:id", async (req, res) => {
 // DELETE /posts/:id - Delete a post
 router.delete("/:id", async (req, res) => {
   try {
-    const postRef = doc(db, "posts", req.params.id);
-    await deleteDoc(postRef);
+    await db.collection("posts").doc(req.params.id).delete();
     res.json({ success: true });
   } catch (err) {
     console.error(err);
