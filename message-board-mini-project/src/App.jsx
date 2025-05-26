@@ -1,9 +1,7 @@
+import MessageBoard from "./MessageBoard";
+
 function App() {
-  return (
-    <>
-      <p>Hello World!</p>
-    </>
-  );
+  return <MessageBoard />;
 }
 
 export default App;
